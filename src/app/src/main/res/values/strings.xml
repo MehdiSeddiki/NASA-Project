@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Nasa Project</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mrp">MRP</string>
+    <string name="eonet">EONET</string>
+    <string name="home">Home</string>
+    <string name="apod">APOD</string>
 </resources>
