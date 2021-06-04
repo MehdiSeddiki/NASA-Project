@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home"
+        android:icon="@drawable/ic_home"
+        android:id="@+id/homeFragment"/>
+
+    <item android:title="APOD"
+        android:icon="@drawable/ic_galaxy"
+        android:id="@+id/apodFragment"/>
+
+    <item android:title="MRP"
+        android:icon="@drawable/ic_planet_mars"
+        android:id="@+id/mrpFragment"/>
+
+    <item android:title="EONET"
+        android:icon="@drawable/ic_planet_earth"
+        android:id="@+id/eonetFragment"/>
+</menu>
