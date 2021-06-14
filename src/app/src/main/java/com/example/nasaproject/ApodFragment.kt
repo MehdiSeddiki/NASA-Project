@@ -1,21 +1,26 @@
 package com.example.nasaproject
 
 import android.os.Bundle
+
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
 import androidx.fragment.app.activityViewModels
-import com.google.gson.Gson
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+
 import com.google.gson.GsonBuilder
-import retrofit2.Call
-import retrofit2.Callback
+
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.URL
+
 
 
 /**
@@ -25,11 +30,14 @@ import java.net.URL
  */
 class ApodFragment : Fragment(){
 
+    lateinit var apodTitle: TextView
     private val apodViewModel by activityViewModels<MainActivity.ApodViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +47,8 @@ class ApodFragment : Fragment(){
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_apod, container, false)
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,14 +61,27 @@ class ApodFragment : Fragment(){
             .addConverterFactory(jsonConverter)
             .build()
         val service = retrofit.create(ApodInterface::class.java)
-        val callback : Callback<ApodObject> = object : Callback<ApodObject> {
+        val callback : retrofit2.Callback<ApodObject> = object : retrofit2.Callback<ApodObject> {
             override fun onResponse(
-                call: Call<ApodObject>,
+                call: retrofit2.Call<ApodObject>,
                 response: Response<ApodObject>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
                         Log.d("paf", "paf + " + data)
+                        apodTitle = view.findViewById(R.id.apod_fragment_textView_apod_title)
+                        apodTitle.setText(data.title)
+                        val apodAuthor = view.findViewById(R.id.apod_fragment_textView_author) as TextView
+                        if (data.copyright != null)
+                            apodAuthor.setText("@" + data.copyright)
+                        else
+                            apodAuthor.setText("@NASA")
+                        val imageView = view.findViewById(R.id.apod_fragment_imgView_potd) as ImageView
+                        Glide.with(this@ApodFragment).load(data.url).into(imageView);
+                        val apodDescription = view.findViewById(R.id.apod_fragment_textView_apod_description) as TextView
+                        apodDescription.setText(data.explanation)
+
+
                     }
                 }
                 else{
@@ -66,7 +89,7 @@ class ApodFragment : Fragment(){
                 }
             }
 
-            override fun onFailure(call: Call<ApodObject>, t: Throwable) {
+            override fun onFailure(call: retrofit2.Call<ApodObject>, t: Throwable) {
                 Log.d("ApodInterface", "WS Error " + t.message)
             }
         }
