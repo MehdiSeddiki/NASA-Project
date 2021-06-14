@@ -13,7 +13,7 @@
         android:id="@+id/apod_fragment_textView_author"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="28dp"
         android:gravity="right"
         android:text="Author"
@@ -48,10 +48,10 @@
     <ScrollView
         android:layout_width="350dp"
         android:layout_height="100dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apod_fragment_textView_author">
+        app:layout_constraintTop_toBottomOf="@+id/apod_fragment_imgView_potd">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,10 +62,22 @@
                 android:id="@+id/apod_fragment_textView_apod_description"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="0dp"
                 android:text="Description"
                 android:textColor="#000000" />
         </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="517dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
