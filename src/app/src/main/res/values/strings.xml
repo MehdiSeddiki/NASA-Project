@@ -6,4 +6,11 @@
     <string name="eonet">EONET</string>
     <string name="home">Home</string>
     <string name="apod">APOD</string>
+    
+    <string-array name="rovers">
+        <item>Curiosity</item>
+        <item>Opportunity</item>
+        <item>Spirit</item>
+    </string-array>
 </resources>
+
