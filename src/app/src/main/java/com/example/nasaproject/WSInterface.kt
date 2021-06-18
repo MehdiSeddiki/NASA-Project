@@ -12,5 +12,8 @@ interface WSInterface {
     fun getLast7Apod(@Query("start_date") startDate: String) : Call<List<ApodObject>>
 
     @GET("photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo")
-    fun getMrpPage(@Query("sol") sol: Int, @Query("camera") Camera: String) : Call<MrpObject>
+    fun getMrpPageWithCam(@Query("sol") sol: Int, @Query("camera") Camera: String) : Call<MrpObject>
+
+    @GET("photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo")
+    fun getMrpPage(@Query("sol") sol: Int) : Call<MrpObject>
 }
