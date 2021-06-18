@@ -1,11 +1,14 @@
 package com.example.nasaproject
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
 import com.google.gson.GsonBuilder
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -18,13 +21,67 @@ import retrofit2.converter.gson.GsonConverterFactory
  * create an instance of this fragment.
  */
 class MrpFragment : Fragment() {
+
+
+
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        //return inflater.inflate(R.layout.fragment_mrp, container, false)
+        val t = inflater.inflate(R.layout.fragment_mrp, container, false)
+        val spinnerRover = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_rover)
+        val spinnerCamera = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_camera)
+        spinnerRover?.adapter = activity?.applicationContext?.let {
+            context?.getResources()?.let { it1 ->
+                ArrayAdapter(
+                    it,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    it1.getStringArray(R.array.rovers)
+                )
+            }
+        } as SpinnerAdapter
+        spinnerRover?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("erreur")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val type = parent?.getItemAtPosition(position).toString()
+                (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
+                println(type)
+            }
+
+        }
+
+        spinnerCamera?.adapter = activity?.applicationContext?.let {
+            context?.getResources()?.let { it1 ->
+                ArrayAdapter(
+                    it,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    it1.getStringArray(R.array.cameras)
+                )
+            }
+        } as SpinnerAdapter
+        spinnerCamera?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("erreur")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val type = parent?.getItemAtPosition(position).toString()
+                (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
+                println(type)
+            }
+
+        }
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_mrp, container, false)
+        return t
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

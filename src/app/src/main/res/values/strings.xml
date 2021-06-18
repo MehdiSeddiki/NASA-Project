@@ -12,5 +12,16 @@
         <item>Opportunity</item>
         <item>Spirit</item>
     </string-array>
+
+    <string-array name="cameras">
+        <item>FHAZ</item>
+        <item>RHAZ</item>
+        <item>MAST</item>
+        <item>CHEMCAM</item>
+        <item>MAHLI</item>
+        <item>MARDI</item>
+        <item>PANCAM</item>
+        <item>MINITES</item>
+    </string-array>
 </resources>
 
