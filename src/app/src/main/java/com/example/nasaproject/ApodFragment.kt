@@ -97,7 +97,6 @@ class ApodFragment : Fragment(){
             }
 
         }
-        val service2 = retrofit.create(ApodInterface::class.java)
         val callback2 : retrofit2.Callback<List<ApodObject>> = object : retrofit2.Callback<List<ApodObject>> {
             override fun onResponse(
                 call: retrofit2.Call<List<ApodObject>>,
@@ -126,7 +125,7 @@ class ApodFragment : Fragment(){
             }
         }
         service.getAllApodList().enqueue(callback)
-        service2.getLast7Apod(getDaysAgo(7)).enqueue(callback2)
+        service.getLast7Apod(getDaysAgo(7)).enqueue(callback2)
     }
 
     fun observePicList() {

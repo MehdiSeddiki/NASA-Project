@@ -16,7 +16,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="28dp"
         android:gravity="right"
-        android:text="Author"
         android:textColor="@color/blue_nasa"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="76dp"
-        android:text="Title"
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +62,6 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:text="Description"
                 android:textColor="#000000" />
         </LinearLayout>
     </ScrollView>
@@ -93,56 +90,49 @@
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image1"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image2"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image3"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image4"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image5"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image6"
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="5dp"
-                    android:background="#c1c1c1"
-                    android:src="@drawable/ic_home" />
+                    android:background="#FFFFFF" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
