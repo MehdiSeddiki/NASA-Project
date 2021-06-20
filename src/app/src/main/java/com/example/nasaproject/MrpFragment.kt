@@ -1,6 +1,7 @@
 package com.example.nasaproject
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -52,16 +53,21 @@ class MrpFragment : Fragment() {
                 )
             }
         } as SpinnerAdapter
-        spinnerRover?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerRover?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println("erreur")
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val type = parent?.getItemAtPosition(position).toString()
                 rover = (parent!!.getChildAt(0) as TextView).text.toString()
                 (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
-                Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
                 println(type)
             }
 
@@ -76,16 +82,21 @@ class MrpFragment : Fragment() {
                 )
             }
         } as SpinnerAdapter
-        spinnerCamera?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerCamera?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println("erreur")
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 val type = parent?.getItemAtPosition(position).toString()
                 camera = (parent!!.getChildAt(0) as TextView).text.toString()
                 (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
-                Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
                 println(type)
             }
 
@@ -104,27 +115,21 @@ class MrpFragment : Fragment() {
                 .build()
             val service = retrofit.create(WSInterface::class.java)
 
-    public fun onClick(view: View) {
-        val url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/" // || opportunity || spirit
-        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
-        val retrofit = Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(jsonConverter)
-            .build()
-        val service = retrofit.create(WSInterface::class.java)
-
-        val callback : retrofit2.Callback<MrpObject> = object : retrofit2.Callback<MrpObject> {
-            override fun onResponse(
-                mrp: retrofit2.Call<MrpObject>,
-                response: Response<MrpObject>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let { data ->
-                        var mrpRecyclerView  = view.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
-                        mrpRecyclerView.setHasFixedSize(true)
-                        mrpRecyclerView.adapter = MrpAdapter(data, view.context)
-                        mrpRecyclerView.layoutManager = LinearLayoutManager(this@MrpFragment.context)
-                        Log.d("Testing", data.toString())
+            val callback: retrofit2.Callback<MrpObject> = object : retrofit2.Callback<MrpObject> {
+                override fun onResponse(
+                    mrp: retrofit2.Call<MrpObject>,
+                    response: Response<MrpObject>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { data ->
+                            var mrpRecyclerView =
+                                view?.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
+                            mrpRecyclerView?.setHasFixedSize(true)
+                            mrpRecyclerView?.adapter = MrpAdapter(data, view?.context as Context)
+                            mrpRecyclerView?.layoutManager =
+                                LinearLayoutManager(this@MrpFragment.context)
+                            Log.d("Testing", data.toString())
+                        }
                     }
                 }
 
