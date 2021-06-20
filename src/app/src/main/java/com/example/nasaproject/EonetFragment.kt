@@ -1,15 +1,20 @@
 package com.example.nasaproject
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.iterator
+import com.google.gson.GsonBuilder
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -17,18 +22,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class EonetFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,23 +30,41 @@ class EonetFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_eonet, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EonetFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EonetFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Api call
+        val url = "https://eonet.sci.gsfc.nasa.gov/api/v2.1/"
+        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(jsonConverter)
+            .build()
+        val service = retrofit.create(WSInterface::class.java)
+
+        val callback : retrofit2.Callback<EonetObject> = object : retrofit2.Callback<EonetObject> {
+            override fun onResponse(
+                call: retrofit2.Call<EonetObject>,
+                response: Response<EonetObject>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { data ->
+                            Log.d("Testing", data.toString())
+                        }
+                    } else {
+                        Log.d("EonetFragment Response", "Servor Error" + response.code().toString())
+                    }
+                } else {
+                    Log.d("EonetFragment Response", "List: Servor Error" + response.message())
                 }
             }
+
+            override fun onFailure(call: Call<EonetObject>, t: Throwable) {
+                Log.d("EonetFragment Failure", "List: WS Error" + t.message.toString())
+            }
+        }
+
+        service.getEonetEvent().enqueue(callback)
     }
 }
