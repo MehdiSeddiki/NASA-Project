@@ -1,14 +1,13 @@
 package com.example.nasaproject
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.iterator
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -27,7 +26,35 @@ class EonetFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_eonet, container, false)
+        val t = inflater.inflate(R.layout.fragment_eonet, container, false)
+
+        val spinnerEventType = t.findViewById<Spinner>(R.id.eonet_fragment_spinner_type)
+
+        spinnerEventType?.adapter = activity?.applicationContext?.let {
+            context?.getResources()?.let { it1 ->
+                ArrayAdapter(
+                    it,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    it1.getStringArray(R.array.event_types)
+                )
+            }
+        } as SpinnerAdapter
+        spinnerEventType?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("erreur")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val type = parent?.getItemAtPosition(position).toString()
+                (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
+                println(type)
+            }
+
+        }
+
+        super.onCreateView(inflater, container, savedInstanceState)
+        return t
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
