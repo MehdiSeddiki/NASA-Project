@@ -1,5 +1,6 @@
 package com.example.nasaproject
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -55,7 +56,7 @@ class ApodFragment : Fragment(){
             .build()
         val service = retrofit.create(WSInterface::class.java)
 
-        val callback : retrofit2.Callback<ApodObject> = object : retrofit2.Callback<ApodObject> {
+        val callbackApodObject : retrofit2.Callback<ApodObject> = object : retrofit2.Callback<ApodObject> {
             override fun onResponse(
                 call: retrofit2.Call<ApodObject>,
                 response: Response<ApodObject>
@@ -85,7 +86,7 @@ class ApodFragment : Fragment(){
             }
         }
 
-        val callback2 : retrofit2.Callback<List<ApodObject>> = object : retrofit2.Callback<List<ApodObject>> {
+        val callbackApodList : retrofit2.Callback<List<ApodObject>> = object : retrofit2.Callback<List<ApodObject>> {
             override fun onResponse(
                 call: retrofit2.Call<List<ApodObject>>,
                 response: Response<List<ApodObject>>
@@ -111,11 +112,11 @@ class ApodFragment : Fragment(){
             }
         }
 
-        service.getAllApodList().enqueue(callback)
-        service.getLast7Apod(getDaysAgo(7)).enqueue(callback2)
+        service.getAllApodList().enqueue(callbackApodObject)
+        service.getLast7Apod(getDaysAgo()).enqueue(callbackApodList)
     }
 
-    fun getDaysAgo(daysAgo: Long): String {
+    private fun getDaysAgo(): String {
         var date = Date()
 
         // Convert Date to Calendar
@@ -133,8 +134,6 @@ class ApodFragment : Fragment(){
             inActiveDate = format1.format(date)
             return inActiveDate
         } catch (e1: ParseException) {
-
-            // TODO Auto-generated catch block
             e1.printStackTrace()
         }
         return date.time.toString()

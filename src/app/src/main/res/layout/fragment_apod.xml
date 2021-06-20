@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/apod_fragment_textView_author"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="28dp"

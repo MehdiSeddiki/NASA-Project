@@ -83,8 +83,8 @@ class MrpFragment : Fragment() {
 
         }
 
-        val button = t.findViewById<Button>(R.id.mrp_fragment_button_search_results)
-        button.setOnClickListener {
+        val searchButton = t.findViewById<Button>(R.id.mrp_fragment_button_search_results)
+        searchButton.setOnClickListener {
             var extension = rover
             if (extension == "Default")
                 extension = "curiosity"
