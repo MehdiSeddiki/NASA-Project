@@ -8,4 +8,4 @@ data class EventObject(val id : String,
                        val link : String,
                        val categories : List<CategoryObject>,
                        val sources : List<SourceObject>,
-                       val geometries : List<GeometryObject>)
+                       val geometry : List<GeometryObject>)

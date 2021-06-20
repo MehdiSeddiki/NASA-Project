@@ -1,3 +1,3 @@
 package com.example.nasaproject
 
-data class CategoryObject(val id : Int, val title : String)
+data class CategoryObject(val id : String, val title : String)

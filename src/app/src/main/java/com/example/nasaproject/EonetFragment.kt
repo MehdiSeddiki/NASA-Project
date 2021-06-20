@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.iterator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Response
@@ -21,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * create an instance of this fragment.
  */
 class EonetFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +64,7 @@ class EonetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Api call
-        val url = "https://eonet.sci.gsfc.nasa.gov/api/v2.1/"
+        val url = "https://eonet.sci.gsfc.nasa.gov/api/v3/"
         val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
         val retrofit = Retrofit.Builder()
             .baseUrl(url)
@@ -77,7 +80,11 @@ class EonetFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.isSuccessful) {
                         response.body()?.let { data ->
-                            Log.d("Testing", data.toString())
+                            Log.d("Testing", data.events[0].toString())
+                            var eonetRecyclerView : RecyclerView = view.findViewById<RecyclerView>(R.id.eonet_fragment_recyclerView)
+                            eonetRecyclerView.setHasFixedSize(true)
+                            eonetRecyclerView.adapter = EonetAdapter(data, view.context)
+                            eonetRecyclerView.layoutManager = LinearLayoutManager(this@EonetFragment.context)
                         }
                     } else {
                         Log.d("EonetFragment Response", "Servor Error" + response.code().toString())
