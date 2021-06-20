@@ -7,7 +7,7 @@
     tools:context=".MrpFragment">
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/mrp_fragment_view_blue_nasa_background"
         android:layout_width="433dp"
         android:layout_height="90dp"
         android:layout_marginTop="112dp"
@@ -28,7 +28,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintTop_toTopOf="@+id/mrp_fragment_view_blue_nasa_background" />
 
     <TextView
         android:id="@+id/mrp_fragment_textView_search_title_rover2"
@@ -41,7 +41,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintTop_toTopOf="@+id/mrp_fragment_view_blue_nasa_background" />
 
     <Button
         android:id="@+id/mrp_fragment_button_search_results"
@@ -49,9 +49,9 @@
         android:layout_height="47dp"
         android:layout_marginEnd="16dp"
         app:icon="@drawable/ic_loupe"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="@+id/mrp_fragment_view_blue_nasa_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/mrp_fragment_view_blue_nasa_background"
         app:layout_constraintVertical_bias="0.476" />
 
     <Spinner
@@ -73,5 +73,28 @@
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/mrp_fragment_spinner_rover"
         app:layout_constraintTop_toBottomOf="@+id/mrp_fragment_textView_search_title_rover2" />
+
+    <FrameLayout
+        android:id="@+id/mrp_fragment_frameLayout"
+        android:layout_width="411dp"
+        android:layout_height="465dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mrp_fragment_view_blue_nasa_background"
+        tools:context=".PertanyaanFragment"
+        tools:ignore="MissingConstraints" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mrp_fragment_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

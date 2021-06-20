@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.GsonBuilder
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -24,6 +26,11 @@ class MrpFragment : Fragment() {
     private var rover = "curiosity";
     private var camera = "";
 
+    private  val mrpRecyclerView : RecyclerView
+        get() {
+            return mrpRecyclerView
+        }
+
     @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +40,7 @@ class MrpFragment : Fragment() {
 
         //return inflater.inflate(R.layout.fragment_mrp, container, false)
         val t = inflater.inflate(R.layout.fragment_mrp, container, false)
+
         val spinnerRover = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_rover)
         val spinnerCamera = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_camera)
         spinnerRover?.adapter = activity?.applicationContext?.let {
@@ -96,17 +104,27 @@ class MrpFragment : Fragment() {
                 .build()
             val service = retrofit.create(WSInterface::class.java)
 
-            val callback: retrofit2.Callback<MrpObject> = object : retrofit2.Callback<MrpObject> {
-                override fun onResponse(
-                    mrp: retrofit2.Call<MrpObject>,
-                    response: Response<MrpObject>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let { data ->
-                            Log.d("Testing", data.toString())
-                        }
-                    } else {
-                        Log.d("MrpFragment Response", "Servor Error" + response.code().toString())
+    public fun onClick(view: View) {
+        val url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/" // || opportunity || spirit
+        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(jsonConverter)
+            .build()
+        val service = retrofit.create(WSInterface::class.java)
+
+        val callback : retrofit2.Callback<MrpObject> = object : retrofit2.Callback<MrpObject> {
+            override fun onResponse(
+                mrp: retrofit2.Call<MrpObject>,
+                response: Response<MrpObject>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { data ->
+                        var mrpRecyclerView  = view.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
+                        mrpRecyclerView.setHasFixedSize(true)
+                        mrpRecyclerView.adapter = MrpAdapter(data, view.context)
+                        mrpRecyclerView.layoutManager = LinearLayoutManager(this@MrpFragment.context)
+                        Log.d("Testing", data.toString())
                     }
                 }
 
