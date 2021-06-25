@@ -29,6 +29,7 @@ import kotlin.collections.ArrayList
 class MrpFragment : Fragment() {
     private var rover = "curiosity";
     private var camera = "";
+    private var oldData = ArrayList<PhotoObject>()
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -36,8 +37,6 @@ class MrpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        //return inflater.inflate(R.layout.fragment_mrp, container, false)
         val t = inflater.inflate(R.layout.fragment_mrp, container, false)
 
         val spinnerRover = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_rover)
@@ -117,10 +116,25 @@ class MrpFragment : Fragment() {
                         var mrpRecyclerView =
                             view?.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
                         mrpRecyclerView?.setHasFixedSize(true)
-                        Log.d("test", data.toString())
-                        mrpRecyclerView?.adapter = MrpAdapter(data, view?.context as Context)
-                        mrpRecyclerView?.layoutManager =
-                            LinearLayoutManager(this@MrpFragment.context)
+                        if ((data.photos.size + oldData.size) < 25)
+                        {
+                            for (photo in data.photos)
+                                oldData.add(photo)
+                            service.getMrpPage("rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", 1000).enqueue(this)
+                        }
+                        else
+                        {
+                            var i = 0
+                            while (oldData.size < 25) {
+                                oldData.add(data.photos[i])
+                                ++i
+                            }
+                            data.photos = oldData
+                            mrpRecyclerView?.adapter = MrpAdapter(data, view?.context as Context)
+                            mrpRecyclerView?.layoutManager =
+                                LinearLayoutManager(this@MrpFragment.context)
+                            oldData = ArrayList<PhotoObject>()
+                        }
                     }
                 }
             }

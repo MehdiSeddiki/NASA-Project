@@ -1,3 +1,3 @@
 package com.example.nasaproject
 
-data class MrpObject(val photos: List<PhotoObject>)
+data class MrpObject(var photos: List<PhotoObject>)
