@@ -33,7 +33,8 @@ import java.util.*
  */
 class ApodFragment : Fragment(){
     lateinit var apodTitle: TextView
-
+    private var dataApod = ApodObject("", "", "", "")
+    private var dataListApod = ArrayList<ApodObject>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +44,7 @@ class ApodFragment : Fragment(){
         return inflater.inflate(R.layout.fragment_apod, container, false)
     }
 
+    @ExperimentalStdlibApi
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +65,7 @@ class ApodFragment : Fragment(){
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
+                        dataApod = data
                         apodTitle = view.findViewById(R.id.apod_fragment_textView_apod_title)
                         apodTitle.setText(data.title)
                         val apodAuthor = view.findViewById(R.id.apod_fragment_textView_author) as TextView
@@ -93,11 +96,32 @@ class ApodFragment : Fragment(){
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
+                        dataListApod = data as ArrayList<ApodObject>
                         val ids = view.findViewById<LinearLayout>(R.id.linearLayout)
                         var tmp = 0
                         for (i in ids) {
                             val imgView = view.findViewById<View>(i.id) as ImageView
                             Glide.with(this@ApodFragment).load(data[tmp].url).into(imgView);
+                            imgView.setOnClickListener{
+                                val l = i.getResources().getResourceName(i.id).length - 1
+                                val tmpApod = dataApod
+
+                                dataApod = dataListApod[i.getResources().getResourceName(i.id)[l].digitToInt()]
+                                dataListApod[i.getResources().getResourceName(i.id)[l].digitToInt()] = tmpApod
+                                apodTitle.setText(dataApod.title)
+
+                                val apodAuthor = view.findViewById(R.id.apod_fragment_textView_author) as TextView
+                                if (dataApod.copyright != null)
+                                    apodAuthor.setText("@" + dataApod.copyright)
+                                else
+                                    apodAuthor.setText("@NASA")
+
+                                val apodDescription = view.findViewById(R.id.apod_fragment_textView_apod_description) as TextView
+                                apodDescription.setText(dataApod.explanation)
+
+                                Glide.with(this@ApodFragment).load(dataListApod[i.getResources().getResourceName(i.id)[l].digitToInt()].url).into(imgView);
+                                Glide.with(this@ApodFragment).load(dataApod.url).into(view.findViewById(R.id.apod_fragment_imgView_potd) as ImageView);
+                            }
                             tmp++
                         }
                     }
