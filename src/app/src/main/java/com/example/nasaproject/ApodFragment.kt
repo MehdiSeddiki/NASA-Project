@@ -1,5 +1,6 @@
 package com.example.nasaproject
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -31,15 +32,7 @@ import java.util.*
  * create an instance of this fragment.
  */
 class ApodFragment : Fragment(){
-
     lateinit var apodTitle: TextView
-    private val apodViewModel by activityViewModels<MainActivity.ApodViewModel>()
-    override fun onCreate(savedInstanceState: Bundle?) {
-
-        super.onCreate(savedInstanceState)
-
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +42,6 @@ class ApodFragment : Fragment(){
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_apod, container, false)
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,15 +54,15 @@ class ApodFragment : Fragment(){
             .baseUrl(url)
             .addConverterFactory(jsonConverter)
             .build()
-        val service = retrofit.create(ApodInterface::class.java)
-        val callback : retrofit2.Callback<ApodObject> = object : retrofit2.Callback<ApodObject> {
+        val service = retrofit.create(WSInterface::class.java)
+
+        val callbackApodObject : retrofit2.Callback<ApodObject> = object : retrofit2.Callback<ApodObject> {
             override fun onResponse(
                 call: retrofit2.Call<ApodObject>,
                 response: Response<ApodObject>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
-                        Log.d("paf", "paf + " + data)
                         apodTitle = view.findViewById(R.id.apod_fragment_textView_apod_title)
                         apodTitle.setText(data.title)
                         val apodAuthor = view.findViewById(R.id.apod_fragment_textView_author) as TextView
@@ -86,25 +77,22 @@ class ApodFragment : Fragment(){
                     }
                 }
                 else{
-                    Log.d("ApodInterface", "Servor Error" + response.code().toString())
+                    Log.d("ApodFragment Response", "Object: Servor Error" + response.code().toString())
                 }
-
-
             }
 
             override fun onFailure(call: retrofit2.Call<ApodObject>, t: Throwable) {
-                Log.d("ApodInterface", "WS Error " + t.message)
+                Log.d("ApodFragment Failure", "Object: WS Error " + t.message)
             }
-
         }
-        val callback2 : retrofit2.Callback<List<ApodObject>> = object : retrofit2.Callback<List<ApodObject>> {
+
+        val callbackApodList : retrofit2.Callback<List<ApodObject>> = object : retrofit2.Callback<List<ApodObject>> {
             override fun onResponse(
                 call: retrofit2.Call<List<ApodObject>>,
                 response: Response<List<ApodObject>>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
-                        Log.d("paf2", "paf2 + " + data)
                         val ids = view.findViewById<LinearLayout>(R.id.linearLayout)
                         var tmp = 0
                         for (i in ids) {
@@ -115,37 +103,28 @@ class ApodFragment : Fragment(){
                     }
                 }
                 else {
-                    Log.d("response", response.message())
-                    Log.d("failed", "failed to fetch data")
+                    Log.d("ApodFragment Response", "List: Servor Error" + response.message())
                 }
             }
 
             override fun onFailure(call: Call<List<ApodObject>>, t: Throwable) {
-                Log.d("failure", t.message.toString())
+                Log.d("ApodFragment Failure", "List: WS Error" + t.message.toString())
             }
         }
-        service.getAllApodList().enqueue(callback)
-        service.getLast7Apod(getDaysAgo(7)).enqueue(callback2)
+
+        service.getAllApodList().enqueue(callbackApodObject)
+        service.getLast7Apod(getDaysAgo()).enqueue(callbackApodList)
     }
 
-    fun observePicList() {
-        apodViewModel.picList.observe(
-            viewLifecycleOwner, { newValue -> println(newValue) }
-        )
-    }
-
-
-    fun getDaysAgo(daysAgo: Long): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
+    private fun getDaysAgo(): String {
         var date = Date()
-        System.out.println("Current Date " + sdf.format(date))
 
         // Convert Date to Calendar
         val c = Calendar.getInstance()
         c.time = date
         c.add(Calendar.DATE, -8)
 
-         date = c.getTime()
+        date = c.getTime()
 
         val format1 = SimpleDateFormat("yyyy-MM-dd")
 
@@ -153,11 +132,8 @@ class ApodFragment : Fragment(){
 
         try {
             inActiveDate = format1.format(date)
-            println(inActiveDate)
             return inActiveDate
         } catch (e1: ParseException) {
-
-            // TODO Auto-generated catch block
             e1.printStackTrace()
         }
         return date.time.toString()
