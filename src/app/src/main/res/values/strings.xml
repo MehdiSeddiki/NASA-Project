@@ -26,5 +26,22 @@
         <item>PANCAM</item>
         <item>MINITES</item>
     </string-array>
+
+    <string-array name="event_types">
+        <item>Default</item>
+        <item>Drought</item>
+        <item>Dust and Haze</item>
+        <item>Wildfires</item>
+        <item>Floods</item>
+        <item>Severe Storms</item>
+        <item>Volcanoes</item>
+        <item>Water Color</item>
+        <item>Landslides</item>
+        <item>Sea and Lake Ice</item>
+        <item>Earthquakes</item>
+        <item>Snow</item>
+        <item>Temperature Extremes</item>
+        <item>Manmade</item>
+    </string-array>
 </resources>
 
