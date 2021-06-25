@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,8 @@ import com.google.gson.GsonBuilder
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -26,11 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MrpFragment : Fragment() {
     private var rover = "curiosity";
     private var camera = "";
-
-    private  val mrpRecyclerView : RecyclerView
-        get() {
-            return mrpRecyclerView
-        }
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -101,46 +99,83 @@ class MrpFragment : Fragment() {
             }
 
         }
+        val url = "https://api.nasa.gov/mars-photos/api/v1/"
+        val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(jsonConverter)
+            .build()
+        val service = retrofit.create(WSInterface::class.java)
+
+        val callbackDraw: retrofit2.Callback<MrpObject> = object : retrofit2.Callback<MrpObject> {
+            override fun onResponse(
+                mrp: retrofit2.Call<MrpObject>,
+                response: Response<MrpObject>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { data ->
+                        var mrpRecyclerView =
+                            view?.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
+                        mrpRecyclerView?.setHasFixedSize(true)
+                        Log.d("test", data.toString())
+                        mrpRecyclerView?.adapter = MrpAdapter(data, view?.context as Context)
+                        mrpRecyclerView?.layoutManager =
+                            LinearLayoutManager(this@MrpFragment.context)
+                    }
+                }
+            }
+
+            override fun onFailure(mrp: retrofit2.Call<MrpObject>, t: Throwable) {
+                Log.d("MrpFragment Failure", "WS Error " + t.message)
+            }
+        }
+
+        val callbackManifest: retrofit2.Callback<EonetManifestObject> = object : retrofit2.Callback<EonetManifestObject> {
+            override fun onResponse(
+                mrp: retrofit2.Call<EonetManifestObject>,
+                response: Response<EonetManifestObject>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { data ->
+                        data.photo_manifest.photos.asReversed()
+
+                        var extension = rover
+                        if (extension == "Default")
+                            extension = "curiosity"
+
+                        if (camera != "Default")
+                            data.photo_manifest.photos = data.photo_manifest.photos.filter { manifestObject -> manifestObject.cameras.contains(camera) }
+                        data.photo_manifest.photos = data.photo_manifest.photos.filter { manifestObject -> manifestObject.total_photos > 25 }
+
+                        if (data.photo_manifest.photos.isEmpty()) {
+                            Toast.makeText(
+                                activity,
+                                "No photos were found for this combination",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+
+                        if (camera == "Default")
+                            service.getMrpPage("rovers/${extension.toLowerCase()}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", data.photo_manifest.photos[0].sol).enqueue(callbackDraw)
+                        else
+                            service.getMrpPageWithCam("rovers/${extension.toLowerCase()}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", data.photo_manifest.photos[0].sol, camera).enqueue(callbackDraw)
+                    }
+                }
+            }
+
+            override fun onFailure(mrp: retrofit2.Call<EonetManifestObject>, t: Throwable) {
+                Log.d("MrpFragment Failure", "WS Error " + t.message)
+            }
+        }
 
         val searchButton = t.findViewById<Button>(R.id.mrp_fragment_button_search_results)
         searchButton.setOnClickListener {
             var extension = rover
             if (extension == "Default")
                 extension = "curiosity"
-            val url = "https://api.nasa.gov/mars-photos/api/v1/rovers/$extension/"
-            val jsonConverter = GsonConverterFactory.create(GsonBuilder().create())
-            val retrofit = Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(jsonConverter)
-                .build()
-            val service = retrofit.create(WSInterface::class.java)
 
-            val callback: retrofit2.Callback<MrpObject> = object : retrofit2.Callback<MrpObject> {
-                override fun onResponse(
-                    mrp: retrofit2.Call<MrpObject>,
-                    response: Response<MrpObject>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let { data ->
-                            var mrpRecyclerView =
-                                view?.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
-                            mrpRecyclerView?.setHasFixedSize(true)
-                            mrpRecyclerView?.adapter = MrpAdapter(data, view?.context as Context)
-                            mrpRecyclerView?.layoutManager =
-                                LinearLayoutManager(this@MrpFragment.context)
-                            Log.d("Testing", data.toString())
-                        }
-                    }
-                }
-
-                override fun onFailure(mrp: retrofit2.Call<MrpObject>, t: Throwable) {
-                    Log.d("MrpFragment Failure", "WS Error " + t.message)
-                }
-            }
-            if (camera == "Default")
-                service.getMrpPage(1000).enqueue(callback)
-            else
-                service.getMrpPageWithCam(1000, camera).enqueue(callback)
+            service.getMrpManifests("manifests/${extension.toLowerCase()}?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo").enqueue(callbackManifest)
         }
 
         super.onCreateView(inflater, container, savedInstanceState)
