@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">Nasa Project</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mrp">MRP</string>
+    <string name="eonet">EONET</string>
+    <string name="home">Home</string>
+    <string name="apod">APOD</string>
+    
+    <string-array name="rovers">
+        <item>Default</item>
+        <item>Curiosity</item>
+        <item>Opportunity</item>
+        <item>Spirit</item>
+    </string-array>
+
+    <string-array name="cameras">
+        <item>Default</item>
+        <item>FHAZ</item>
+        <item>RHAZ</item>
+        <item>MAST</item>
+        <item>CHEMCAM</item>
+        <item>MAHLI</item>
+        <item>MARDI</item>
+        <item>NAVCAM</item>
+        <item>PANCAM</item>
+        <item>MINITES</item>
+    </string-array>
+
+    <string-array name="event_types">
+        <item>Default</item>
+        <item>Drought</item>
+        <item>Dust and Haze</item>
+        <item>Wildfires</item>
+        <item>Floods</item>
+        <item>Severe Storms</item>
+        <item>Volcanoes</item>
+        <item>Water Color</item>
+        <item>Landslides</item>
+        <item>Sea and Lake Ice</item>
+        <item>Earthquakes</item>
+        <item>Snow</item>
+        <item>Temperature Extremes</item>
+        <item>Manmade</item>
+    </string-array>
 </resources>
+
