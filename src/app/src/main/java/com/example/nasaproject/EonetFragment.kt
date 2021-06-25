@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.GsonBuilder
@@ -23,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * create an instance of this fragment.
  */
 class EonetFragment : Fragment() {
+    private var category = 0;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,10 +50,12 @@ class EonetFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val type = parent?.getItemAtPosition(position).toString()
                 (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                category = position + 5
+                if (category >= 11)
+                    category += 1
                 Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
                 println(type)
             }
-
         }
 
         super.onCreateView(inflater, container, savedInstanceState)
@@ -80,7 +82,6 @@ class EonetFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.isSuccessful) {
                         response.body()?.let { data ->
-                            Log.d("Testing", data.events[0].toString())
                             var eonetRecyclerView : RecyclerView = view.findViewById<RecyclerView>(R.id.eonet_fragment_recyclerView)
                             eonetRecyclerView.setHasFixedSize(true)
                             eonetRecyclerView.adapter = EonetAdapter(data, view.context)
@@ -97,6 +98,11 @@ class EonetFragment : Fragment() {
             override fun onFailure(call: Call<EonetObject>, t: Throwable) {
                 Log.d("EonetFragment Failure", "List: WS Error" + t.message.toString())
             }
+        }
+
+        val searchButton = view.findViewById<Button>(R.id.eonet_fragment_button_search_results)
+        searchButton.setOnClickListener {
+            service.getEonetEventFilteredByCategory("categories/$category").enqueue(callback)
         }
 
         service.getEonetEvent().enqueue(callback)
