@@ -192,6 +192,8 @@ class MrpFragment : Fragment() {
             service.getMrpManifests("manifests/${extension.toLowerCase()}?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo").enqueue(callbackManifest)
         }
 
+        service.getMrpPage("rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", 1000).enqueue(callbackDraw)
+
         super.onCreateView(inflater, container, savedInstanceState)
         return t
     }
