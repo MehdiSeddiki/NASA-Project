@@ -11,16 +11,13 @@ import retrofit2.http.Url
 
 interface WSInterface {
     @GET("planetary/apod?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo")
-    fun getAllApodList() : Call<ApodObject>
+    fun getApodObject() : Call<ApodObject>
 
     @GET("planetary/apod?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo")
-    fun getLast7Apod(@Query("start_date") startDate: String) : Call<List<ApodObject>>
+    fun getApodObjectLastSevenDays(@Query("start_date") startDate: String) : Call<List<ApodObject>>
 
     @GET
-    fun getMrpPageWithCam(@Url url : String, @Query("sol") sol: Int, @Query("camera") Camera: String) : Call<MrpObject>
-
-    @GET
-    fun getMrpPage(@Url url : String, @Query("sol") sol: Int) : Call<MrpObject>
+    fun getMrpObject(@Url url : String, @Query("sol") sol: Int) : Call<MrpObject>
 
     @GET
     fun getMrpManifests(@Url url : String) : Call<EonetManifestObject>

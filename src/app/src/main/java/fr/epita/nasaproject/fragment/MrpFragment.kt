@@ -114,7 +114,7 @@ class MrpFragment : Fragment() {
                         {
                             for (photo in data.photos)
                                 oldData.add(photo)
-                            service.getMrpPage(
+                            service.getMrpObject(
                                 "rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
                                 1000
                             ).enqueue(this)
@@ -167,17 +167,13 @@ class MrpFragment : Fragment() {
                             return
                         }
 
-                        if (camera == "Default")
-                            service.getMrpPage(
-                                "rovers/${extension.toLowerCase(Locale.ROOT)}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
-                                data.photo_manifest.photos[0].sol
-                            ).enqueue(callbackDraw)
-                        else
-                            service.getMrpPageWithCam(
-                                "rovers/${extension.toLowerCase(Locale.ROOT)}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
-                                data.photo_manifest.photos[0].sol,
-                                camera
-                            ).enqueue(callbackDraw)
+                        var urlReq = "rovers/${extension.toLowerCase(Locale.ROOT)}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1"
+                        if (camera != "Default")
+                            urlReq += "&camera=${camera}"
+                        service.getMrpObject(
+                            urlReq,
+                            data.photo_manifest.photos[0].sol
+                        ).enqueue(callbackDraw)
                     }
                 }
             }
@@ -198,7 +194,7 @@ class MrpFragment : Fragment() {
             ).enqueue(callbackManifest)
         }
 
-        service.getMrpPage(
+        service.getMrpObject(
             "rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
             1000
         ).enqueue(callbackDraw)

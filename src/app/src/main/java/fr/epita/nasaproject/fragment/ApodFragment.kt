@@ -134,8 +134,8 @@ class ApodFragment : Fragment(){
             }
         }
 
-        service.getAllApodList().enqueue(callbackApodObject)
-        service.getLast7Apod(getDaysAgo()).enqueue(callbackApodList)
+        service.getApodObject().enqueue(callbackApodObject)
+        service.getApodObjectLastSevenDays(getDaysAgo()).enqueue(callbackApodList)
     }
 
     private fun getDaysAgo(): String {
