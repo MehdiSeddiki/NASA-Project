@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.NasaProject">
-        <activity android:name=".MainActivity">
+        <activity android:name="fr.epita.nasaproject.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

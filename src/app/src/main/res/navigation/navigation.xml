@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.nasaproject.HomeFragment"
+        android:name="fr.epita.nasaproject.fragment.HomeFragment"
         android:label="Home"
         android:background="#0B3D91"
         tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/apodFragment"
-        android:name="com.example.nasaproject.ApodFragment"
+        android:name="fr.epita.nasaproject.fragment.ApodFragment"
         android:label="Astronomy Picture Of The Day"
         android:background="#0B3D91"
         tools:layout="@layout/fragment_apod" />
     <fragment
         android:id="@+id/mrpFragment"
-        android:name="com.example.nasaproject.MrpFragment"
+        android:name="fr.epita.nasaproject.fragment.MrpFragment"
         android:label="Mars Rover Pictures"
         android:background="#0B3D91"
         tools:layout="@layout/fragment_mrp" />
     <fragment
         android:id="@+id/eonetFragment"
-        android:name="com.example.nasaproject.EonetFragment"
+        android:name="fr.epita.nasaproject.fragment.EonetFragment"
         android:label="Earth Observatory Natural Event Tracker"
         android:background="#0B3D91"
         tools:layout="@layout/fragment_eonet" />
