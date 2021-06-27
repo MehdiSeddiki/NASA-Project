@@ -19,13 +19,15 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/apod_fragment_imgView_potd"
-        app:layout_constraintTop_toBottomOf="@+id/apod_fragment_imgView_potd" />
+        app:layout_constraintTop_toBottomOf="@+id/apod_fragment_imgView_potd"
+        tools:text="Author" />
 
     <ImageView
         android:id="@+id/apod_fragment_imgView_potd"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="20dp"
+        android:contentDescription="@string/apodPictureDescription"
         app:layout_constraintStart_toStartOf="@+id/apod_fragment_textView_apod_title"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_textView_apod_title"
         tools:src="@tools:sample/avatars" />
@@ -40,7 +42,8 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="picture title" />
 
     <ScrollView
         android:id="@+id/apod_fragment_scrollView_description"
@@ -141,7 +144,7 @@
         android:id="@+id/apod_fragment_textView_horizontal_scrollview_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Past 7 days photos"
+        android:text="@string/apodPast7DaysPictures"
         android:textColor="#000000"
         android:textSize="17sp"
         android:textStyle="bold"
