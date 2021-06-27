@@ -6,6 +6,12 @@
     <string name="eonet">EONET</string>
     <string name="home">Home</string>
     <string name="apod">APOD</string>
+
+    <string name="NasaProject">NASA Project</string>
+    <string name="logoDescription">Nasa Logo</string>
+    <string name="devTeam">This application is developed by :</string>
+    <string name="devMehdi">Mehdi SEDDIKI</string>
+    <string name="devValentin">Valentin THIRON</string>
     
     <string-array name="rovers">
         <item>Default</item>
