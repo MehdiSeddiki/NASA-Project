@@ -8,7 +8,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginTop="12dp"
     android:layout_marginRight="16dp"
-    android:clickable="true"
+    android:clickable="false"
     android:foreground="?selectableItemBackground"
     card_view:cardBackgroundColor="#FFFF"
     card_view:cardCornerRadius="8dp"
@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Type" />
+                    android:text="@string/eonetListItemTypeTitle" />
 
                 <TextView
                     android:id="@+id/eonet_list_item_textview_type"
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Date" />
+                    android:text="@string/eonetListItemDateTitle" />
 
                 <TextView
                     android:id="@+id/eonet_list_item_textview_date"
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Magnitude" />
+                    android:text="@string/eonetListItemMagnitudeTitle" />
 
                 <TextView
                     android:id="@+id/eonet_list_item_textview_magnitude"

@@ -8,7 +8,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginTop="12dp"
     android:layout_marginRight="16dp"
-    android:clickable="true"
+    android:clickable="false"
     android:foreground="?selectableItemBackground"
     card_view:cardBackgroundColor="#FFFF"
     card_view:cardCornerRadius="8dp"
@@ -46,14 +46,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Date" />
+                    android:text="@string/mrpListItemDateTitle" />
 
                 <TextView
                     android:id="@+id/mrp_fragment_list_item_textview_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView" />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -68,14 +67,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Rover" />
+                    android:text="@string/mrpListItemRoverTitle" />
 
                 <TextView
                     android:id="@+id/mrp_fragment_list_item_textview_rover"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -88,14 +86,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Camera" />
+                    android:text="@string/mrpListItemCameraTitle" />
 
                 <TextView
                     android:id="@+id/mrp_fragment_list_item_textview_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>

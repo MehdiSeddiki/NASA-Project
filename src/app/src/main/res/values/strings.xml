@@ -12,6 +12,25 @@
     <string name="devTeam">This application is developed by :</string>
     <string name="devMehdi">Mehdi SEDDIKI</string>
     <string name="devValentin">Valentin THIRON</string>
+
+
+    <string name="apodPictureDescription">Picture of the day</string>
+    <string name="apodPast7DaysPictures">Past 7 days photos</string>
+
+    <string name="eonetListItemTypeTitle">Type :</string>
+    <string name="eonetListItemDateTitle">Date :</string>
+    <string name="eonetListItemMagnitudeTitle">Magnitude :</string>
+
+    <string name="eonetFragmentTypeTitle">Type</string>
+    <string name="eonetFragmentDescription">Select an event type to get all the corresponding events</string>
+
+    <string name="mrpFragmentRoverTitle">Rover</string>
+    <string name="mrpFragmentCameraTitle">Camera</string>
+    <string name="mrpFragmentDescription">Select a rover or a camera to get the latest corresponding pictures</string>
+
+    <string name="mrpListItemDateTitle">Date :</string>
+    <string name="mrpListItemRoverTitle">Rover :</string>
+    <string name="mrpListItemCameraTitle">Camera :</string>
     
     <string-array name="rovers">
         <item>Default</item>
