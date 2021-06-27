@@ -25,7 +25,7 @@
         android:id="@+id/apod_fragment_imgView_potd"
         android:layout_width="350dp"
         android:layout_height="200dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/apod_fragment_textView_apod_title"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_textView_apod_title"
         tools:src="@tools:sample/avatars" />
@@ -70,9 +70,8 @@
         android:id="@+id/apod_fragment_layout_photos_list"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="@+id/apod_fragment_scrollView_description"
-        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="@+id/apod_fragment_scrollView_description"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_scrollView_description">
 

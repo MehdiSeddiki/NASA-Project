@@ -14,18 +14,16 @@ import fr.epita.nasaproject.`object`.MrpObject
 
 class MrpAdapter(val data : MrpObject, val context : Context): RecyclerView.Adapter<MrpAdapter.MrpHolder>(){
      class MrpHolder(rowView : View) : RecyclerView.ViewHolder(rowView){
-         val camera : TextView = rowView.findViewById<TextView>(R.id.mrp_fragment_list_item_textview_camera)
-         val date : TextView = rowView.findViewById<TextView>(R.id.mrp_fragment_list_item_textview_date)
-         val rover : TextView = rowView.findViewById<TextView>(R.id.mrp_fragment_list_item_textview_rover)
-         val image : ImageView = rowView.findViewById<ImageView>(R.id.mrp_fragment_list_item_img)
+         val camera : TextView = rowView.findViewById(R.id.mrp_fragment_list_item_textview_camera)
+         val date : TextView = rowView.findViewById(R.id.mrp_fragment_list_item_textview_date)
+         val rover : TextView = rowView.findViewById(R.id.mrp_fragment_list_item_textview_rover)
+         val image : ImageView = rowView.findViewById(R.id.mrp_fragment_list_item_img)
      }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MrpHolder {
-        val viewholder : MrpHolder
         val rowView : View = LayoutInflater.from(parent.context)
             .inflate(R.layout.mrp_list_item, parent, false)
-        viewholder = MrpHolder(rowView)
-        return viewholder
+        return MrpHolder(rowView)
     }
 
     override fun onBindViewHolder(holder: MrpHolder, position: Int) {
@@ -33,7 +31,7 @@ class MrpAdapter(val data : MrpObject, val context : Context): RecyclerView.Adap
         holder.camera.text = data.photos[position].camera.name
         holder.date.text = data.photos[position].earth_date.toString()
         val src = data.photos[position].img_src
-        Glide.with(context).load(src).into(holder.image);
+        Glide.with(context).load(src).into(holder.image)
     }
 
     override fun getItemCount(): Int {

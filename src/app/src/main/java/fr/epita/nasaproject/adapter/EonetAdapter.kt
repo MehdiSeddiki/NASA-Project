@@ -11,10 +11,10 @@ import fr.epita.nasaproject.`object`.EonetObject
 
 class EonetAdapter(val data : EonetObject, val context : Context): RecyclerView.Adapter<EonetAdapter.EonetHolder>(){
     class EonetHolder(rowView : View) : RecyclerView.ViewHolder(rowView){
-        val title : TextView = rowView.findViewById<TextView>(R.id.eonet_list_item_textview_title)
-        val type : TextView = rowView.findViewById<TextView>(R.id.eonet_list_item_textview_type)
-        val date : TextView = rowView.findViewById<TextView>(R.id.eonet_list_item_textview_date)
-        val magnitude : TextView = rowView.findViewById<TextView>(R.id.eonet_list_item_textview_magnitude)
+        val title : TextView = rowView.findViewById(R.id.eonet_list_item_textview_title)
+        val type : TextView = rowView.findViewById(R.id.eonet_list_item_textview_type)
+        val date : TextView = rowView.findViewById(R.id.eonet_list_item_textview_date)
+        val magnitude : TextView = rowView.findViewById(R.id.eonet_list_item_textview_magnitude)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EonetHolder {
@@ -28,8 +28,18 @@ class EonetAdapter(val data : EonetObject, val context : Context): RecyclerView.
     override fun onBindViewHolder(holder: EonetHolder, position: Int) {
         holder.title.text = data.events[position].title
         holder.type.text = data.events[position].categories[0].title
-        holder.date.text = data.events[position].geometry[0]?.date.toString()
-        holder.magnitude.text = data.events[position].geometry[0].magnitudeValue.toString() + " " + data.events[position].geometry[0].magnitudeUnit
+        holder.date.text = data.events[position].geometry[0].date.toString()
+        val unit = data.events[position].geometry[0].magnitudeUnit
+        when {
+            unit == null -> holder.magnitude.text =
+                "N/A"
+            unit.contains("kts") -> holder.magnitude.text =
+                "${data.events[position].geometry[0].magnitudeValue * 0.514444f} m/s"
+            unit.contains("NM^2") -> holder.magnitude.text =
+                "${data.events[position].geometry[0].magnitudeValue * 1.852f} km"
+            unit.contains("Mw") -> holder.magnitude.text =
+                "${data.events[position].geometry[0].magnitudeValue} Mw"
+        }
     }
 
     override fun getItemCount(): Int {
