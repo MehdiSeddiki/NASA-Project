@@ -54,11 +54,8 @@ class MrpFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val type = parent?.getItemAtPosition(position).toString()
                 rover = (parent!!.getChildAt(0) as TextView).text.toString()
                 (parent.getChildAt(0) as TextView).setTextColor(Color.WHITE)
-                Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
-                println(type)
             }
 
         }
@@ -83,11 +80,8 @@ class MrpFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val type = parent?.getItemAtPosition(position).toString()
                 camera = (parent!!.getChildAt(0) as TextView).text.toString()
                 (parent.getChildAt(0) as TextView).setTextColor(Color.WHITE)
-                Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
-                println(type)
             }
 
         }

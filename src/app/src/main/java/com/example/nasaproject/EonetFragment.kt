@@ -43,12 +43,10 @@ class EonetFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemAtPosition(position).toString()
                 (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
                 category = position + 5
                 if (category >= 11)
                     category += 1
-                Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -75,10 +73,18 @@ class EonetFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
-                        val eonetRecyclerView : RecyclerView = view.findViewById(R.id.eonet_fragment_recyclerView)
-                        eonetRecyclerView.setHasFixedSize(true)
-                        eonetRecyclerView.adapter = EonetAdapter(data, view.context)
-                        eonetRecyclerView.layoutManager = LinearLayoutManager(this@EonetFragment.context)
+                        if (data.events.isEmpty())
+                            Toast.makeText(
+                                activity,
+                                "No data were found for this combination",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        else {
+                            val eonetRecyclerView : RecyclerView = view.findViewById(R.id.eonet_fragment_recyclerView)
+                            eonetRecyclerView.setHasFixedSize(true)
+                            eonetRecyclerView.adapter = EonetAdapter(data, view.context)
+                            eonetRecyclerView.layoutManager = LinearLayoutManager(this@EonetFragment.context)
+                        }
                     }
                 } else {
                     Log.d("EonetFragment Response", "Server Error" + response.message())
