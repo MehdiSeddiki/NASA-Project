@@ -18,6 +18,7 @@
         android:gravity="right"
         android:textColor="@color/blue_nasa"
         android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_imgView_potd" />
 
@@ -37,8 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="50dp"
         android:textColor="#000000"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,8 +71,8 @@
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="44dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,53 +90,65 @@
                 <ImageView
                     android:id="@+id/image0"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image1"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image2"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image3"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image4"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image5"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
                     android:id="@+id/image6"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Past 7 days photos"
+        android:textColor="#000000"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/layout"
+        app:layout_constraintStart_toStartOf="@+id/layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
