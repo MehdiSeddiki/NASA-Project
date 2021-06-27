@@ -47,7 +47,7 @@
         android:id="@+id/mrp_fragment_textView_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:text="Select a rover or a camera to get the latest pictures corresponding"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/mrp_fragment_view_blue_nasa_background"
