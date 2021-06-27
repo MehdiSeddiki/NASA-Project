@@ -5,7 +5,7 @@
     android:id="@+id/img_view_nasa_logo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context="fr.epita.nasaproject.fragment.HomeFragment">
 
     <TextView
         android:id="@+id/textView_home_title"
