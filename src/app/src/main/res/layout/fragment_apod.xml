@@ -14,12 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
         android:gravity="right"
         android:textColor="@color/blue_nasa"
-        android:textStyle="bold"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/apod_fragment_imgView_potd"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_imgView_potd" />
 
     <ImageView
@@ -27,9 +26,7 @@
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/apod_fragment_textView_apod_title"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_textView_apod_title"
         tools:src="@tools:sample/avatars" />
 
@@ -46,15 +43,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/apod_fragment_scrollView_description"
         android:layout_width="350dp"
         android:layout_height="100dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="36dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/apod_fragment_imgView_potd"
+        app:layout_constraintStart_toStartOf="@+id/apod_fragment_imgView_potd"
         app:layout_constraintTop_toBottomOf="@+id/apod_fragment_imgView_potd">
 
         <LinearLayout
+            android:id="@+id/apod_fragment_linearLayout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -69,68 +67,69 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/layout"
+        android:id="@+id/apod_fragment_layout_photos_list"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="@+id/apod_fragment_scrollView_description"
         app:layout_constraintHorizontal_bias="0.524"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+        app:layout_constraintStart_toStartOf="@+id/apod_fragment_scrollView_description"
+        app:layout_constraintTop_toBottomOf="@+id/apod_fragment_scrollView_description">
 
         <HorizontalScrollView
+            android:id="@+id/apod_fragment_horizontal_scrollview_photos_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
+                android:id="@+id/apod_fragment_linearLayout_photos_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/image0"
+                    android:id="@+id/apod_fragment_image0"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
-                    android:id="@+id/image1"
+                    android:id="@+id/apod_fragment_image1"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
-                    android:id="@+id/image2"
+                    android:id="@+id/apod_fragment_image2"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
-                    android:id="@+id/image3"
+                    android:id="@+id/apod_fragment_image3"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
-                    android:id="@+id/image4"
+                    android:id="@+id/apod_fragment_image4"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
-                    android:id="@+id/image5"
+                    android:id="@+id/apod_fragment_image5"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
                     android:background="#FFFFFF" />
 
                 <ImageView
-                    android:id="@+id/image6"
+                    android:id="@+id/apod_fragment_image6"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="5dp"
@@ -140,15 +139,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/apod_fragment_textView_horizontal_scrollview_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:text="Past 7 days photos"
         android:textColor="#000000"
         android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/layout"
-        app:layout_constraintStart_toStartOf="@+id/layout" />
+        app:layout_constraintBottom_toTopOf="@+id/apod_fragment_layout_photos_list"
+        app:layout_constraintStart_toStartOf="@+id/apod_fragment_scrollView_description"
+        app:layout_constraintTop_toBottomOf="@+id/apod_fragment_scrollView_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -92,7 +92,7 @@ class ApodFragment : Fragment(){
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
                         dataListApod = data as ArrayList<ApodObject>
-                        val ids = view.findViewById<LinearLayout>(R.id.linearLayout)
+                        val ids = view.findViewById<LinearLayout>(R.id.apod_fragment_linearLayout_photos_list)
                         var cnt = 0
                         for (i in ids) {
                             val imgView = view.findViewById<View>(i.id) as ImageView
