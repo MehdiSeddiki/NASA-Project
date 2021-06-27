@@ -2,13 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/eonet_list_item"
+    android:id="@+id/eonet_list_item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
     android:layout_marginTop="12dp"
     android:layout_marginRight="16dp"
-    android:clickable="true"
+    android:clickable="false"
     android:foreground="?selectableItemBackground"
     card_view:cardBackgroundColor="#FFFF"
     card_view:cardCornerRadius="8dp"
@@ -27,9 +27,9 @@
                 android:id="@+id/eonet_list_item_textview_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textSize="24sp"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"
+                tools:text="Eonet event title" />
 
 
             <LinearLayout
@@ -42,14 +42,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Type" />
+                    android:text="@string/eonetListItemTypeTitle" />
 
                 <TextView
                     android:id="@+id/eonet_list_item_textview_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView" />
+                    tools:text="type" />
             </LinearLayout>
 
 
@@ -63,14 +63,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Date" />
+                    android:text="@string/eonetListItemDateTitle" />
 
                 <TextView
                     android:id="@+id/eonet_list_item_textview_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView" />
+                    tools:text="date" />
             </LinearLayout>
 
             <LinearLayout
@@ -83,14 +83,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Magnitude" />
+                    android:text="@string/eonetListItemMagnitudeTitle" />
 
                 <TextView
                     android:id="@+id/eonet_list_item_textview_magnitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView" />
+                    tools:text="magnitude" />
             </LinearLayout>
 
         </LinearLayout>
