@@ -21,9 +21,6 @@ interface WSInterface {
     @GET
     fun getMrpManifests(@Url url : String) : Call<EonetManifestObject>
 
-    @GET("events?")
-    fun getEonetEvent() : Call<EonetObject>
-
     @GET
-    fun getEonetEventFilteredByCategory(@Url url: String) : Call<EonetObject>
+    fun getEonetEvent(@Url url: String) : Call<EonetObject>
 }

@@ -1,6 +1,6 @@
 package com.example.nasaproject
 
-import java.util.*
+import java.util.Date
 
 data class PhotoObject(val id : Int,
                        val sol : Int,

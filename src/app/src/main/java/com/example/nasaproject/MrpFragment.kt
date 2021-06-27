@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,15 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MrpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MrpFragment : Fragment() {
-    private var rover = "curiosity";
-    private var camera = "";
+    private var rover = "curiosity"
+    private var camera = ""
     private var oldData = ArrayList<PhotoObject>()
 
     @SuppressLint("ResourceType")
@@ -42,7 +35,7 @@ class MrpFragment : Fragment() {
         val spinnerRover = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_rover)
         val spinnerCamera = t.findViewById<Spinner>(R.id.mrp_fragment_spinner_camera)
         spinnerRover?.adapter = activity?.applicationContext?.let {
-            context?.getResources()?.let { it1 ->
+            context?.resources?.let { it1 ->
                 ArrayAdapter(
                     it,
                     R.layout.support_simple_spinner_dropdown_item,
@@ -52,7 +45,7 @@ class MrpFragment : Fragment() {
         } as SpinnerAdapter
         spinnerRover?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("erreur")
+                Log.d("Mrp Rover Spinner", "Nothing was selected")
             }
 
             override fun onItemSelected(
@@ -63,7 +56,7 @@ class MrpFragment : Fragment() {
             ) {
                 val type = parent?.getItemAtPosition(position).toString()
                 rover = (parent!!.getChildAt(0) as TextView).text.toString()
-                (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                (parent.getChildAt(0) as TextView).setTextColor(Color.WHITE)
                 Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
                 println(type)
             }
@@ -71,7 +64,7 @@ class MrpFragment : Fragment() {
         }
 
         spinnerCamera?.adapter = activity?.applicationContext?.let {
-            context?.getResources()?.let { it1 ->
+            context?.resources?.let { it1 ->
                 ArrayAdapter(
                     it,
                     R.layout.support_simple_spinner_dropdown_item,
@@ -81,7 +74,7 @@ class MrpFragment : Fragment() {
         } as SpinnerAdapter
         spinnerCamera?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("erreur")
+                Log.d("Mrp Camera Spinner", "Nothing was selected")
             }
 
             override fun onItemSelected(
@@ -92,7 +85,7 @@ class MrpFragment : Fragment() {
             ) {
                 val type = parent?.getItemAtPosition(position).toString()
                 camera = (parent!!.getChildAt(0) as TextView).text.toString()
-                (parent!!.getChildAt(0) as TextView).setTextColor(Color.WHITE)
+                (parent.getChildAt(0) as TextView).setTextColor(Color.WHITE)
                 Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
                 println(type)
             }
@@ -113,14 +106,17 @@ class MrpFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { data ->
-                        var mrpRecyclerView =
+                        val mrpRecyclerView =
                             view?.findViewById<RecyclerView>(R.id.mrp_fragment_recyclerView)
                         mrpRecyclerView?.setHasFixedSize(true)
                         if ((data.photos.size + oldData.size) < 25)
                         {
                             for (photo in data.photos)
                                 oldData.add(photo)
-                            service.getMrpPage("rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", 1000).enqueue(this)
+                            service.getMrpPage(
+                                "rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
+                                1000
+                            ).enqueue(this)
                         }
                         else
                         {
@@ -133,7 +129,7 @@ class MrpFragment : Fragment() {
                             mrpRecyclerView?.adapter = MrpAdapter(data, view?.context as Context)
                             mrpRecyclerView?.layoutManager =
                                 LinearLayoutManager(this@MrpFragment.context)
-                            oldData = ArrayList<PhotoObject>()
+                            oldData = ArrayList()
                         }
                     }
                 }
@@ -171,9 +167,16 @@ class MrpFragment : Fragment() {
                         }
 
                         if (camera == "Default")
-                            service.getMrpPage("rovers/${extension.toLowerCase()}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", data.photo_manifest.photos[0].sol).enqueue(callbackDraw)
+                            service.getMrpPage(
+                                "rovers/${extension.toLowerCase(Locale.ROOT)}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
+                                data.photo_manifest.photos[0].sol
+                            ).enqueue(callbackDraw)
                         else
-                            service.getMrpPageWithCam("rovers/${extension.toLowerCase()}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", data.photo_manifest.photos[0].sol, camera).enqueue(callbackDraw)
+                            service.getMrpPageWithCam(
+                                "rovers/${extension.toLowerCase(Locale.ROOT)}/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
+                                data.photo_manifest.photos[0].sol,
+                                camera
+                            ).enqueue(callbackDraw)
                     }
                 }
             }
@@ -189,10 +192,15 @@ class MrpFragment : Fragment() {
             if (extension == "Default")
                 extension = "curiosity"
 
-            service.getMrpManifests("manifests/${extension.toLowerCase()}?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo").enqueue(callbackManifest)
+            service.getMrpManifests(
+                "manifests/${extension.toLowerCase(Locale.ROOT)}?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo"
+            ).enqueue(callbackManifest)
         }
 
-        service.getMrpPage("rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1", 1000).enqueue(callbackDraw)
+        service.getMrpPage(
+            "rovers/curiosity/photos?api_key=mwrnIqB77s6ArbAYaFKPE8a6ngU7Q5T9NHTbIvfo&page=1",
+            1000
+        ).enqueue(callbackDraw)
 
         super.onCreateView(inflater, container, savedInstanceState)
         return t

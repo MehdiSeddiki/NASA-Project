@@ -1,6 +1,6 @@
 package com.example.nasaproject
 
-import java.util.*
+import java.util.Date
 
 data class RoverObject(val id : Int,
                        val name : String,

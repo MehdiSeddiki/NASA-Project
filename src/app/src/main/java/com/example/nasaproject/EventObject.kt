@@ -1,7 +1,5 @@
 package com.example.nasaproject
 
-import android.icu.text.CaseMap
-
 data class EventObject(val id : String,
                        val title: String,
                        val description : String,

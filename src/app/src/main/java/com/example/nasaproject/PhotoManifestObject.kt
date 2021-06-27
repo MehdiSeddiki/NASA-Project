@@ -1,6 +1,6 @@
 package com.example.nasaproject
 
-import java.util.*
+import java.util.Date
 
 data class PhotoManifestObject(val name : String,
                                val landing_date : Date,

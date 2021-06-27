@@ -16,13 +16,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EonetFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EonetFragment : Fragment() {
-    private var category = 0;
+    private var category = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +29,7 @@ class EonetFragment : Fragment() {
         val spinnerEventType = t.findViewById<Spinner>(R.id.eonet_fragment_spinner_type)
 
         spinnerEventType?.adapter = activity?.applicationContext?.let {
-            context?.getResources()?.let { it1 ->
+            context?.resources?.let { it1 ->
                 ArrayAdapter(
                     it,
                     R.layout.support_simple_spinner_dropdown_item,
@@ -44,7 +39,7 @@ class EonetFragment : Fragment() {
         } as SpinnerAdapter
         spinnerEventType?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("erreur")
+                Log.d("Eonet Event Spinner", "Nothing was selected")
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -54,7 +49,6 @@ class EonetFragment : Fragment() {
                 if (category >= 11)
                     category += 1
                 Toast.makeText(activity, type, Toast.LENGTH_LONG).show()
-                println(type)
             }
         }
 
@@ -76,35 +70,31 @@ class EonetFragment : Fragment() {
 
         val callback : retrofit2.Callback<EonetObject> = object : retrofit2.Callback<EonetObject> {
             override fun onResponse(
-                call: retrofit2.Call<EonetObject>,
+                call: Call<EonetObject>,
                 response: Response<EonetObject>
             ) {
                 if (response.isSuccessful) {
-                    if (response.isSuccessful) {
-                        response.body()?.let { data ->
-                            var eonetRecyclerView : RecyclerView = view.findViewById<RecyclerView>(R.id.eonet_fragment_recyclerView)
-                            eonetRecyclerView.setHasFixedSize(true)
-                            eonetRecyclerView.adapter = EonetAdapter(data, view.context)
-                            eonetRecyclerView.layoutManager = LinearLayoutManager(this@EonetFragment.context)
-                        }
-                    } else {
-                        Log.d("EonetFragment Response", "Servor Error" + response.code().toString())
+                    response.body()?.let { data ->
+                        val eonetRecyclerView : RecyclerView = view.findViewById(R.id.eonet_fragment_recyclerView)
+                        eonetRecyclerView.setHasFixedSize(true)
+                        eonetRecyclerView.adapter = EonetAdapter(data, view.context)
+                        eonetRecyclerView.layoutManager = LinearLayoutManager(this@EonetFragment.context)
                     }
                 } else {
-                    Log.d("EonetFragment Response", "List: Servor Error" + response.message())
+                    Log.d("EonetFragment Response", "Server Error" + response.message())
                 }
             }
 
             override fun onFailure(call: Call<EonetObject>, t: Throwable) {
-                Log.d("EonetFragment Failure", "List: WS Error" + t.message.toString())
+                Log.d("EonetFragment Failure", "WS Error" + t.message.toString())
             }
         }
 
         val searchButton = view.findViewById<Button>(R.id.eonet_fragment_button_search_results)
         searchButton.setOnClickListener {
-            service.getEonetEventFilteredByCategory("categories/$category").enqueue(callback)
+            service.getEonetEvent("categories/$category").enqueue(callback)
         }
 
-        service.getEonetEvent().enqueue(callback)
+        service.getEonetEvent("events?").enqueue(callback)
     }
 }
